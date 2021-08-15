@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "__pthread_kill:(null)">
+      </ContextState>
+      <ContextState
+         contextName = "MockURLSession.dataTask(with:completionHandler:):MockURLSession.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "dataTaskCallCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.searchForBook(terms:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "session">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewControllerTests.test_tappingButton_shouldMakeDataTaskToSearchForEBookOutFromBoneville():ViewControllerTests.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
