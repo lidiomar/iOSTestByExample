@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,10 @@
 		2D39930926C9B78D00BBBD83 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D39930826C9B78D00BBBD83 /* ViewControllerTests.swift */; };
 		2D39930B26C9B83500BBBD83 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D39930A26C9B83500BBBD83 /* TestHelpers.swift */; };
 		2D39930D26C9B9F600BBBD83 /* DummyURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D39930C26C9B9F600BBBD83 /* DummyURLSessionDataTask.swift */; };
+		2D74D8B026CAB0FA001102BC /* SpyURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D74D8AF26CAB0FA001102BC /* SpyURLSession.swift */; };
+		2DA4F77126CB0673002814D0 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA4F77026CB0673002814D0 /* TestError.swift */; };
+		2DA4F77326CB076E002814D0 /* ViewControllerPresentationSpy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA4F77226CB076E002814D0 /* ViewControllerPresentationSpy.framework */; platformFilter = ios; };
+		2DA4F77526CB079A002814D0 /* ViewControllerPresentationSpy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DA4F77226CB076E002814D0 /* ViewControllerPresentationSpy.framework */; platformFilter = ios; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +41,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2DA4F77426CB0788002814D0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				2DA4F77526CB079A002814D0 /* ViewControllerPresentationSpy.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2D3992D326C9AE6A00BBBD83 /* NetworkRequest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkRequest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D3992D626C9AE6A00BBBD83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +72,9 @@
 		2D39930826C9B78D00BBBD83 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		2D39930A26C9B83500BBBD83 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		2D39930C26C9B9F600BBBD83 /* DummyURLSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyURLSessionDataTask.swift; sourceTree = "<group>"; };
+		2D74D8AF26CAB0FA001102BC /* SpyURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyURLSession.swift; sourceTree = "<group>"; };
+		2DA4F77026CB0673002814D0 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
+		2DA4F77226CB076E002814D0 /* ViewControllerPresentationSpy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ViewControllerPresentationSpy.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA4F77326CB076E002814D0 /* ViewControllerPresentationSpy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,11 +140,14 @@
 		2D3992EC26C9AE6B00BBBD83 /* NetworkRequestTests */ = {
 			isa = PBXGroup;
 			children = (
+				2DA4F77226CB076E002814D0 /* ViewControllerPresentationSpy.framework */,
 				2D3992EF26C9AE6B00BBBD83 /* Info.plist */,
 				2D39930626C9B6F100BBBD83 /* MockURLSession.swift */,
 				2D39930826C9B78D00BBBD83 /* ViewControllerTests.swift */,
 				2D39930A26C9B83500BBBD83 /* TestHelpers.swift */,
 				2D39930C26C9B9F600BBBD83 /* DummyURLSessionDataTask.swift */,
+				2D74D8AF26CAB0FA001102BC /* SpyURLSession.swift */,
+				2DA4F77026CB0673002814D0 /* TestError.swift */,
 			);
 			path = NetworkRequestTests;
 			sourceTree = "<group>";
@@ -164,6 +188,7 @@
 				2D3992E526C9AE6B00BBBD83 /* Sources */,
 				2D3992E626C9AE6B00BBBD83 /* Frameworks */,
 				2D3992E726C9AE6B00BBBD83 /* Resources */,
+				2DA4F77426CB0788002814D0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -278,6 +303,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA4F77126CB0673002814D0 /* TestError.swift in Sources */,
+				2D74D8B026CAB0FA001102BC /* SpyURLSession.swift in Sources */,
 				2D39930D26C9B9F600BBBD83 /* DummyURLSessionDataTask.swift in Sources */,
 				2D39930926C9B78D00BBBD83 /* ViewControllerTests.swift in Sources */,
 				2D39930726C9B6F100BBBD83 /* MockURLSession.swift in Sources */,
@@ -487,6 +514,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NetworkRequestTests",
+				);
 				INFOPLIST_FILE = NetworkRequestTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -510,6 +541,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NetworkRequestTests",
+				);
 				INFOPLIST_FILE = NetworkRequestTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
