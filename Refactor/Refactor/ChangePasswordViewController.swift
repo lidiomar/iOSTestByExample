@@ -1,6 +1,6 @@
 import UIKit
 
-class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
+class ChangePasswordViewController: UIViewController {
 
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     @IBOutlet weak var oldPasswordTextField: UITextField!
@@ -26,66 +26,70 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction private func cancel() {
-        oldPasswordTextField.resignFirstResponder()
-        newPasswordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
+        view.endEditing(true)
         dismiss(animated: true)
     }
     
     @IBAction private func changePassword() {
+        guard validateInputs() else {
+            return
+        }
+        setupWaitingAppereance()
+        attemptToChangePassword()
+    }
+    
+    private func showAlert(message: String, okAction: @escaping (UIAlertAction) -> Void) {
+        let alertController = UIAlertController(title: nil,
+                                                message: message,
+                                                preferredStyle: .alert)
+        
+        let okButton = UIAlertAction(title: "OK",
+                                     style: .default,
+                                     handler: okAction)
+        
+        alertController.addAction(okButton)
+        alertController.preferredAction = okButton
+        self.present(alertController, animated: true)
+    }
+    
+    private func validateInputs() -> Bool {
         if oldPasswordTextField.text?.isEmpty ?? true {
             oldPasswordTextField.becomeFirstResponder()
-            return
+            return false
         }
         
         if newPasswordTextField.text?.isEmpty ?? true {
-            let alertController = UIAlertController(title: nil,
-                                                    message: "Please enter a new password",
-                                                    preferredStyle: .alert)
-            let okButton = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            showAlert(message:"Please enter a new password") { [weak self] _ in
                 self?.newPasswordTextField.becomeFirstResponder()
             }
-            
-            alertController.addAction(okButton)
-            alertController.preferredAction = okButton
-            self.present(alertController, animated: true)
-            return
+            resetNewPasswords()
+            return false
         }
         
         if newPasswordTextField.text?.count ?? 0 < 6 {
-            let alertController = UIAlertController(title: nil,
-                                                    message: "The new password should have at least 6 characters",
-                                                    preferredStyle: .alert)
-            
-            let okButton = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                self?.newPasswordTextField.text = ""
-                self?.confirmPasswordTextField.text = ""
+            showAlert(message:"The new password should have at least 6 characters") { [weak self] _ in
                 self?.newPasswordTextField.becomeFirstResponder()
             }
-            
-            alertController.addAction(okButton)
-            alertController.preferredAction = okButton
-            self.present(alertController, animated: true)
-            return
+            resetNewPasswords()
+            return false
         }
         
         if newPasswordTextField.text != confirmPasswordTextField.text {
-            let alertController = UIAlertController(title: nil,
-                                                    message: "The new password and the confirmation password dont match. Please try again",
-                                                    preferredStyle: .alert)
-            
-            let okButton = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                self?.newPasswordTextField.text = ""
-                self?.confirmPasswordTextField.text = ""
+            showAlert(message:"The new password and the confirmation password dont match. Please try again") { [weak self] _ in
                 self?.newPasswordTextField.becomeFirstResponder()
             }
-            
-            alertController.addAction(okButton)
-            alertController.preferredAction = okButton
-            self.present(alertController, animated: true)
-            return
+            return false
         }
-        
+        return true
+    }
+    
+    private func resetNewPasswords() {
+        newPasswordTextField.text = ""
+        confirmPasswordTextField.text = ""
+        newPasswordTextField.becomeFirstResponder()
+    }
+    
+    private func setupWaitingAppereance() {
         oldPasswordTextField.resignFirstResponder()
         newPasswordTextField.resignFirstResponder()
         confirmPasswordTextField.resignFirstResponder()
@@ -100,14 +104,15 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
             blurView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         activityIndicator.startAnimating()
-        
+    }
+    
+    private func attemptToChangePassword() {
         passwordChanger.change(
             securityToken: securityToken,
             oldPassword: oldPasswordTextField.text ?? "",
             newPassword: newPasswordTextField.text ?? "",
             onSuccess: { [weak self] in
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.removeFromSuperview()
+                self?.hideSpinner()
                 
                 let alertController = UIAlertController(
                     title: nil,
@@ -127,8 +132,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
                 
             },
             onFailure: { [weak self] message in
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.removeFromSuperview()
+                self?.hideSpinner()
                 
                 let alertController = UIAlertController(
                     title: nil,
@@ -155,6 +159,13 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
+    private func hideSpinner() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+    }
+}
+
+extension ChangePasswordViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == oldPasswordTextField {
             newPasswordTextField.becomeFirstResponder()
@@ -166,3 +177,4 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 }
+

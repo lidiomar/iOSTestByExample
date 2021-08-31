@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ChangePasswordViewControllerTests.verifyAlertPresented(message:file:line:):ChangePasswordViewControllerTests.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "alertVerifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

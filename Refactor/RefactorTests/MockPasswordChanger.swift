@@ -45,6 +45,16 @@ final class MockPasswordChanger: PasswordChanging {
         changeWasNeverCalled(file: file, line: line)
     }
     
+    func changeCallSuccess(file: StaticString = #file, line: UInt = #line) {
+        guard changeWasCalledOnce(file: file, line: line) else { return }
+        changeArgsOnSuccess.last!()
+    }
+    
+    func changeCallFailure(message: String, file: StaticString = #file, line: UInt = #line) {
+        guard changeWasCalledOnce(file: file, line: line) else { return }
+        changeArgsOnFailure.last!(message)
+    }
+    
     private func changeWasCalledOnce(file: StaticString = #file, line: UInt = #line) -> Bool {
         verifyMethodCalledOnce(methodName: changeMethodName,
                                callCount: changeCallCount,

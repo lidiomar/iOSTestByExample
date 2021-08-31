@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D49D48026DBDBA700A9B41C /* ViewControllerPresentationSpy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D49D47F26DBDBA700A9B41C /* ViewControllerPresentationSpy.framework */; };
+		2D49D48226DBDBC900A9B41C /* ViewControllerPresentationSpy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D49D47F26DBDBA700A9B41C /* ViewControllerPresentationSpy.framework */; };
 		2D67EF4926DAAA5400849812 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D67EF4826DAAA5400849812 /* AppDelegate.swift */; };
 		2D67EF4B26DAAA5400849812 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D67EF4A26DAAA5400849812 /* SceneDelegate.swift */; };
 		2D67EF4D26DAAA5400849812 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D67EF4C26DAAA5400849812 /* ViewController.swift */; };
@@ -38,7 +40,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2D49D48126DBDBBC00A9B41C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				2D49D48226DBDBC900A9B41C /* ViewControllerPresentationSpy.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2D49D47F26DBDBA700A9B41C /* ViewControllerPresentationSpy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ViewControllerPresentationSpy.framework; sourceTree = "<group>"; };
 		2D67EF4526DAAA5400849812 /* Refactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D67EF4826DAAA5400849812 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D67EF4A26DAAA5400849812 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D49D48026DBDBA700A9B41C /* ViewControllerPresentationSpy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +140,7 @@
 		2D67EF5E26DAAA5600849812 /* RefactorTests */ = {
 			isa = PBXGroup;
 			children = (
+				2D49D47F26DBDBA700A9B41C /* ViewControllerPresentationSpy.framework */,
 				2D67EF6126DAAA5600849812 /* Info.plist */,
 				2D67EF7C26DABC8C00849812 /* TestHelpers.swift */,
 				2D67EF7E26DABE1900849812 /* MockPasswordChanger.swift */,
@@ -167,6 +185,7 @@
 				2D67EF5726DAAA5600849812 /* Sources */,
 				2D67EF5826DAAA5600849812 /* Frameworks */,
 				2D67EF5926DAAA5600849812 /* Resources */,
+				2D49D48126DBDBBC00A9B41C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -489,6 +508,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RefactorTests",
+				);
 				INFOPLIST_FILE = RefactorTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -510,6 +533,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RefactorTests",
+				);
 				INFOPLIST_FILE = RefactorTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (

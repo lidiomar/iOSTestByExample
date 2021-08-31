@@ -7,24 +7,30 @@
 
 import Foundation
 import XCTest
+import ViewControllerPresentationSpy
 @testable import Refactor
 
 class ChangePasswordViewControllerTests: XCTestCase {
     
     private var sut: ChangePasswordViewController!
     private var passwordChanger: MockPasswordChanger!
+    private var alertVerifier: AlertVerifier!
     
     override func setUp() {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         sut = storyboard.instantiateViewController(identifier: String(describing: ChangePasswordViewController.self))
         passwordChanger = MockPasswordChanger()
+        sut.passwordChanger = passwordChanger
+        alertVerifier = AlertVerifier()
         sut.loadViewIfNeeded()
     }
     
     override func tearDown() {
         executeRunLoop()
         sut = nil
+        passwordChanger = nil
+        alertVerifier = nil
         super.tearDown()
     }
     
@@ -109,6 +115,56 @@ class ChangePasswordViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.oldPasswordTextField.isFirstResponder)
     }
     
+    func test_tappingCancel_shouldDismissModal() {
+        let dismissalVerifier = DismissalVerifier()
+        
+        tap(sut.cancelBarButton)
+        
+        dismissalVerifier.verify(animated: true, dismissedViewController: sut)
+    }
+    
+    func test_tappingSubmit_withNewPasswordEmpty_shouldNotChangePassword() {
+        setUpValidPasswordEntries()
+        sut.newPasswordTextField.text = ""
+        
+        tap(sut.submitButton)
+        
+        passwordChanger.verifyChangeNeverCalled()
+    }
+    
+    func test_tappingSubmit_withValidFieldsFocusedOnOldPassword_resignsFocus() { setUpValidPasswordEntries()
+        putFocusOn(textField: sut.oldPasswordTextField)
+        XCTAssertTrue(sut.oldPasswordTextField.isFirstResponder, "precondition")
+        
+        tap(sut.submitButton)
+        
+        XCTAssertFalse(sut.oldPasswordTextField.isFirstResponder)
+    }
+    
+    func test_tappingSubmit_withValidFields_shouldDisableCancelBarButton() {
+        setUpValidPasswordEntries()
+        XCTAssertTrue(sut.cancelBarButton.isEnabled, "precondition")
+        
+        tap(sut.submitButton)
+        
+        XCTAssertFalse(sut.cancelBarButton.isEnabled)
+    }
+    
+    func test_tappingSubmit_withValidFields_shouldRequestChangePassword() {
+        sut.securityToken = "TOKEN"
+        sut.oldPasswordTextField.text = "OLD456"
+        sut.newPasswordTextField.text = "NEW456"
+        sut.confirmPasswordTextField.text = sut.newPasswordTextField.text
+        
+        tap(sut.submitButton)
+        
+        passwordChanger.verifyChange(
+            securityToken: "TOKEN",
+            oldPassword: "OLD456",
+            newPassword: "NEW456"
+        )
+    }
+
     private func putFocusOn(textField: UITextField) {
         putInViewHierarchy(sut)
         textField.becomeFirstResponder()
@@ -118,6 +174,28 @@ class ChangePasswordViewControllerTests: XCTestCase {
         sut.oldPasswordTextField.text = "NONEMPTY"
         sut.newPasswordTextField.text = "123456"
         sut.confirmPasswordTextField.text = sut.newPasswordTextField.text
+    }
+    
+    private func setUpEntriesNewPasswordTooShort() {
+        sut.oldPasswordTextField.text = "NONEMPTY"
+        sut.newPasswordTextField.text = "123456"
+        sut.confirmPasswordTextField.text = sut.newPasswordTextField.text
+    }
+    
+    private func verifyAlertPresented(
+        message: String,
+        file: StaticString = #file,
+        line: UInt = #line) {
+        alertVerifier.verify(
+            title: nil,
+            message: message,
+            animated: true,
+            actions: [.default("OK")],
+            presentingViewController: sut,
+            file: file,
+            line: line)
+        
+        XCTAssertEqual(alertVerifier.preferredAction?.title, "OK", "preferred action", file: file, line: line)
     }
 }
  
